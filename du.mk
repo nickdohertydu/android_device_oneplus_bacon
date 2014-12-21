@@ -16,8 +16,12 @@
 TARGET_SCREEN_HEIGHT := 1920
 TARGET_SCREEN_WIDTH := 1080
 
-# Inherit from those products. Most specific first.
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+# Inherit from the common Open Source product configuration
+$(call inherit-product, $(SRC_TARGET_DIR)/product/aosp_base_telephony.mk)
+
+# Inherit from our custom product configuration
+$(call inherit-product, vendor/du/config/common.mk)
+$(call inherit-product, vendor/du/config/gsm.mk)
 
 # Inherit from bacon device
 $(call inherit-product, device/oneplus/bacon/bacon.mk)
@@ -26,7 +30,7 @@ $(call inherit-product, device/oneplus/bacon/bacon.mk)
 $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 
 # Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# $(call inherit-product, vendor/cm/config/common_full_phone.mk)
 
 PRODUCT_NAME := cm_bacon
 PRODUCT_DEVICE := bacon
@@ -42,10 +46,9 @@ PRODUCT_BUILD_PROP_OVERRIDES += TARGET_DEVICE=A0001 PRODUCT_NAME=bacon
 
 TARGET_CONTINUOUS_SPLASH_ENABLED := true
 
-## Use the latest approved GMS identifiers unless running a signed build
-ifneq ($(SIGN_BUILD),true)
-PRODUCT_BUILD_PROP_OVERRIDES += BUILD_FINGERPRINT=oneplus/bacon/A0001:4.4.2/KVT49L/XNPH25R:user/release-keys PRIVATE_BUILD_DESC="bacon-user 4.4.2 KVT49L XNPH25R release-keys"
-else
-# Signed bacon gets a special boot animation because it's special.
-PRODUCT_BOOTANIMATION := device/oneplus/bacon/bootanimation.zip
-endif
+# Kernel inline build
+TARGET_KERNEL_CONFIG := cyanogenmod_bacon_defconfig
+TARGET_VARIANT_CONFIG := cyanogenmod_bacon_defconfig
+TARGET_SELINUX_CONFIG := cyanogenmod_bacon_defconfig
+
+$(call inherit-product-if-exists, vendor/oneplus/bacon/bacon-vendor.mk)
