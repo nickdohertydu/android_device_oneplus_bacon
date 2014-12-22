@@ -29,7 +29,7 @@ $(call inherit-product, device/oneplus/bacon/bacon.mk)
 # Enhanced NFC
 # $(call inherit-product, vendor/cm/config/nfc_enhanced.mk)
 
-PRODUCT_NAME := cm_bacon
+PRODUCT_NAME := du_bacon
 PRODUCT_DEVICE := bacon
 PRODUCT_MANUFACTURER := OnePlus
 PRODUCT_MODEL := A0001
